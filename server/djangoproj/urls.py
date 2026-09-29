@@ -27,6 +27,14 @@ urlpatterns = [
     path('login/', ensure_csrf_cookie(TemplateView.as_view(template_name="index.html")), name='login'),
     path('register/', ensure_csrf_cookie(TemplateView.as_view(template_name="index.html")), name='register',),
     path('dealers/', ensure_csrf_cookie(TemplateView.as_view(template_name="index.html")), name='dealers'),
-    path('dealer/<int:dealer_id>', ensure_csrf_cookie(TemplateView.as_view(template_name="index.html")), name='dealer'),
-    path('postreview/<int:dealer_id>', ensure_csrf_cookie(TemplateView.as_view(template_name="index.html")), name='postreview'),
+    path(
+        'dealer/<int:dealer_id>',
+        ensure_csrf_cookie(TemplateView.as_view(template_name="index.html")),
+        name='dealer',
+    ),
+    path(
+        'postreview/<int:dealer_id>',
+        ensure_csrf_cookie(TemplateView.as_view(template_name="index.html")),
+        name='postreview',
+    ),
 ]

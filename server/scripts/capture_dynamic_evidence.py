@@ -29,7 +29,9 @@ SCREEN_ACCESS = "import CoreGraphics\nprint(CGPreflightScreenCaptureAccess())\n"
 WINDOWS = r"""
 import Foundation
 import CoreGraphics
-let windows = CGWindowListCopyWindowInfo([.optionAll, .excludeDesktopElements], kCGNullWindowID) as? [[String: Any]] ?? []
+let windows = CGWindowListCopyWindowInfo(
+    [.optionAll, .excludeDesktopElements], kCGNullWindowID
+) as? [[String: Any]] ?? []
 let selected = windows.filter {
     String(describing: $0[kCGWindowOwnerName as String] ?? "") == "Google Chrome for Testing"
     && ($0[kCGWindowLayer as String] as? Int) == 0
@@ -60,7 +62,11 @@ def main():
     if urlparse(base_url).hostname not in {"localhost", "127.0.0.1", "::1"}:
         parser.error("This evidence script is restricted to a local lab server.")
     if args.mode == "window" and swift_result(SCREEN_ACCESS) != "true":
-        parser.error("macOS screen-recording access is required for genuine address-bar screenshots; enable it for the host application (Visual Studio Code for this session), or use --mode page for supporting evidence only.")
+        parser.error(
+            "macOS screen-recording access is required for genuine address-bar screenshots; "
+            "enable it for the host application (Visual Studio Code for this session), "
+            "or use --mode page for supporting evidence only."
+        )
 
     account = json.loads(args.account_file.read_text())
     evidence = Path(__file__).resolve().parent.parent / "evidence"
@@ -76,7 +82,11 @@ def main():
         "screenshots": [], "checks": [], "console_errors": [],
     }
     if args.mode == "page":
-        manifest["limitation"] = "Supporting page-content screenshots only. Browser address bars are absent because macOS screen-recording permission was unavailable. Recapture window mode for assessment."
+        manifest["limitation"] = (
+            "Supporting page-content screenshots only. Browser address bars are absent "
+            "because macOS screen-recording permission was unavailable. "
+            "Recapture window mode for assessment."
+        )
 
     capture_window_id = None
 
@@ -113,7 +123,10 @@ def main():
         manifest["screenshots"].append({"name": name, "url": page.url, "files": paths})
         print(f"Saved {name}: {page.url}", flush=True)
 
-    browser_path = Path.home() / "Library/Caches/ms-playwright/chromium-1223/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"
+    browser_path = Path.home() / (
+        "Library/Caches/ms-playwright/chromium-1223/chrome-mac-arm64/"
+        "Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"
+    )
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(
             executable_path=str(browser_path), headless=args.mode == "page",
@@ -122,7 +135,10 @@ def main():
         browser_session = browser.new_browser_cdp_session()
         process_info = browser_session.send("SystemInfo.getProcessInfo")["processInfo"]
         browser_pid = next(int(process["id"]) for process in process_info if process["type"] == "browser")
-        context = browser.new_context(no_viewport=args.mode == "window", viewport=None if args.mode == "window" else {"width": 1440, "height": 960})
+        context = browser.new_context(
+            no_viewport=args.mode == "window",
+            viewport=None if args.mode == "window" else {"width": 1440, "height": 960},
+        )
         page = context.new_page()
         page.on("pageerror", lambda error: manifest["console_errors"].append(str(error)))
         page.set_default_timeout(20000)
@@ -153,7 +169,11 @@ def main():
         state = dealer_row.locator("td").nth(5).inner_text().strip()
         with page.expect_response(lambda response: response.url.endswith(f"/djangoapp/get_dealers/{state}")):
             page.get_by_label("Filter dealerships by state").select_option(state)
-        page.wait_for_function("state => { const cells = [...document.querySelectorAll('tbody tr td:nth-child(6)')]; return cells.length > 0 && cells.every(cell => cell.textContent.trim() === state); }", arg=state)
+        page.wait_for_function(
+            "state => { const cells = [...document.querySelectorAll('tbody tr td:nth-child(6)')]; "
+            "return cells.length > 0 && cells.every(cell => cell.textContent.trim() === state); }",
+            arg=state,
+        )
         expect(page.locator("tbody tr").first.locator("td")).to_have_count(7)
         expect(dealer_link).to_be_visible()
         states = page.locator("tbody tr td:nth-child(6)").all_text_contents()
@@ -187,7 +207,10 @@ def main():
             page.get_by_role("link", name="Back to dealership").click()
             manifest["checks"].append("Reused the already submitted demonstration review; no duplicate was created.")
         else:
-            with page.expect_response(lambda response: response.url.endswith("/djangoapp/add_review") and response.request.method == "POST") as response_info:
+            with page.expect_response(
+                lambda response: response.url.endswith("/djangoapp/add_review")
+                and response.request.method == "POST"
+            ) as response_info:
                 page.get_by_role("button", name="Post Review", exact=True).click()
             response = response_info.value
             if response.status != 200:

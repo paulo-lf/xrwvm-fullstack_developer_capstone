@@ -124,3 +124,107 @@ img{
     text-align:center;
     box-shadow: 2px 2px 3px #999;  
 }
+
+/* Static lab pages, matching the supplied lab screenshots. */
+.static-page {
+  background: #fff;
+  color: #303030;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.site-nav {
+  background: #08bed0;
+  min-height: 96px;
+  padding: 8px 0;
+}
+
+.site-nav .container-fluid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 12px;
+  gap: 0;
+}
+
+.site-nav .navbar-brand {
+  margin: 0 5% 0 0;
+  padding: 0;
+  color: #173f45;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.site-nav .navbar-nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+}
+
+.site-nav .nav-link {
+  padding: 8px;
+  color: #28717b;
+  font-size: 20px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.site-nav .nav-link.active,
+.site-nav .nav-link:hover { color: #174d55; }
+.site-nav a:focus-visible { outline: 2px solid #174d55; outline-offset: 3px; }
+.site-nav .loginlink { margin-left: auto; gap: 1rem; }
+.site-nav .homepage_links { padding: 0; color: #174d55; }
+
+.page-shell { width: 80%; margin: 4% auto 2rem; }
+.about-panel { padding: 0 20px 28px; border: 1px solid #f5f5f5; }
+.page-intro { margin-bottom: 28px; }
+.page-intro h1 { margin: 0 0 28px; text-align: center; font-size: 36px; font-weight: 500; }
+.page-intro p { margin: 0; font-size: 14px; line-height: 1.6; }
+.team-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 10%; padding: 0 4%; }
+.static-page .team-card { margin: 0; border: 1px solid #fafafa; border-radius: 0; box-shadow: none; }
+.team-photo { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 0; }
+.team-card .card-body { padding: 56px 14px 24px; font-size: 14px; line-height: 1.55; }
+.team-card .team-role { margin: 0 16px 20px; padding: 8px 4px; background: #79518d; color: #fff; text-align: center; font-size: 18px; font-weight: 400; }
+.team-card p { margin-bottom: 18px; }
+.team-card a { color: inherit; text-decoration: none; overflow-wrap: anywhere; }
+.team-card a:hover { text-decoration: underline; }
+
+.contact-panel { margin-top: 40px; padding: 28px; border: 2px solid #e0e0e0; border-radius: 56px; box-shadow: 3px 3px 2px #999; }
+.showroom-image { display: block; width: 60%; height: auto; margin: 0 auto; }
+.contact-divider { margin: 16px 0 24px; border: 0; border-top: 1px solid #d0d0d0; opacity: 1; }
+.contact-layout { display: grid; grid-template-columns: 53% 47%; align-items: stretch; }
+.contact-illustration { display: flex; justify-content: center; align-items: center; }
+.contact-image { display: block; width: 240px; max-width: 80%; height: auto; }
+.contact-information { border-left: 2px solid #606060; padding: 0 12px 0 28px; color: #789cc4; text-align: center; font-size: 18px; line-height: 1.5; }
+.contact-information dl { margin: -6px 0 0; }
+.contact-information dt { font-weight: 700; }
+.contact-information dd { margin: 0; }
+.contact-information a { color: inherit; text-decoration: none; overflow-wrap: anywhere; }
+.contact-information a:hover { text-decoration: underline; }
+.dealer-contact { font-weight: 700; }
+
+.home-content { max-width: 760px; }
+.static-page .home-card { margin: 0; border: 1px solid #cad5d9; border-radius: 12px; overflow: hidden; }
+.home-card .card-img-top { width: 100%; }
+.home-card .banner { padding: 1.5rem; text-align: center; }
+.home-card h1 { font-size: 1.75rem; }
+
+@media (max-width: 760px) {
+  .site-nav .container-fluid { row-gap: 12px; }
+  .site-nav .navbar-brand { font-size: 28px; }
+  .site-nav .nav-link { font-size: 16px; }
+  .site-nav .loginlink { margin-left: 8px; }
+  .page-shell { width: 92%; margin-top: 28px; }
+  .about-panel { padding: 0 12px 20px; }
+  .team-grid { grid-template-columns: 1fr; gap: 28px; padding: 0; }
+  .static-page .team-card { width: 100%; max-width: 340px; justify-self: center; }
+  .team-card .card-body { padding-top: 28px; }
+  .contact-panel { padding: 20px; border-radius: 32px; }
+  .showroom-image { width: 100%; }
+  .contact-layout { grid-template-columns: 1fr; gap: 20px; }
+  .contact-image { width: 180px; }
+  .contact-information { border-left: 0; border-top: 1px solid #d0d0d0; padding: 24px 0 0; font-size: 16px; }
+}

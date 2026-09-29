@@ -16,11 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
-from django.conf.urls.static import static
-from django.conf import settings
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('djangoapp/', include('djangoapp.urls')),
-    path('', TemplateView.as_view(template_name="Home.html")),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('', TemplateView.as_view(template_name="Home.html"), name='home'),
+    path('about/', TemplateView.as_view(template_name="About.html"), name='about'),
+    path('contact/', TemplateView.as_view(template_name="Contact.html"), name='contact'),
+    path('login/', ensure_csrf_cookie(TemplateView.as_view(template_name="index.html")), name='login'),
+    path('register/', ensure_csrf_cookie(TemplateView.as_view(template_name="index.html")), name='register',),
+    path('dealers/', ensure_csrf_cookie(TemplateView.as_view(template_name="index.html")), name='dealers'),
+    path('dealer/<int:dealer_id>', ensure_csrf_cookie(TemplateView.as_view(template_name="index.html")), name='dealer'),
+    path('postreview/<int:dealer_id>', ensure_csrf_cookie(TemplateView.as_view(template_name="index.html")), name='postreview'),
+]

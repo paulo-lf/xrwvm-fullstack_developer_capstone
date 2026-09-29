@@ -1,0 +1,2 @@
+curl -X GET http://127.0.0.1:5050/analyze/Fantastic%20services --silent --show-error --fail-with-body --max-time 60
+{"sentiment":"positive"}

@@ -1,0 +1,23 @@
+Local static pages verification
+2026-09-20T19:43:39.440961+00:00
+PASS manage.py check: System check identified no issues (0 silenced).
+PASS manage.py migrate --check: 
+PASS 200 http://127.0.0.1:8005/: title, navigation, active link, structure, local assets
+PASS 200 http://127.0.0.1:8005/about/: title, navigation, active link, structure, local assets
+PASS 200 http://127.0.0.1:8005/contact/: title, navigation, active link, structure, local assets
+PASS 200 http://localhost:8005/: title, navigation, active link, structure, local assets
+PASS 200 http://localhost:8005/about/: title, navigation, active link, structure, local assets
+PASS 200 http://localhost:8005/contact/: title, navigation, active link, structure, local assets
+PASS 200 /static/bootstrap.min.css: text/css, 155800 bytes
+PASS 200 /static/car_dealership.jpg: image/jpeg, 263696 bytes
+PASS 200 /static/contactus.png: image/png, 29347 bytes
+PASS 200 /static/style.css: text/css, 4392 bytes
+PASS 200 /static/team-daniel.jpg: image/jpeg, 5242 bytes
+PASS 200 /static/team-maya.jpg: image/jpeg, 3539 bytes
+PASS 200 /static/team-sofia.jpg: image/jpeg, 6948 bytes
+PASS /about redirects to /about/
+PASS /contact redirects to /contact/
+
+Browser visual verification unavailable: the in-app browser tool failed during setup.
+Login, Register, and View Dealerships are starter links for later labs.
+Existing evidence files were preserved. This is local verification, not public GitHub submission evidence.

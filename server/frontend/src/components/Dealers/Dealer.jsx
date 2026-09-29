@@ -1,93 +1,115 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import "./Dealers.css";
-import "../assets/style.css";
-import positive_icon from "../assets/positive.png"
-import neutral_icon from "../assets/neutral.png"
-import negative_icon from "../assets/negative.png"
-import review_icon from "../assets/reviewbutton.png"
+import './Dealers.css';
+import '../assets/style.css';
+import positiveIcon from '../assets/positive.png';
+import neutralIcon from '../assets/neutral.png';
+import negativeIcon from '../assets/negative.png';
 import Header from '../Header/Header';
+import useSession from '../../hooks/useSession';
+
+const sentimentIcons = { positive: positiveIcon, neutral: neutralIcon, negative: negativeIcon };
 
 const Dealer = () => {
-
-
-  const [dealer, setDealer] = useState({});
+  const { id } = useParams();
+  const [dealer, setDealer] = useState(null);
   const [reviews, setReviews] = useState([]);
-  const [unreviewed, setUnreviewed] = useState(false);
-  const [postReview, setPostReview] = useState(<></>)
-
-  let curr_url = window.location.href;
-  let root_url = curr_url.substring(0,curr_url.indexOf("dealer"));
-  let params = useParams();
-  let id =params.id;
-  let dealer_url = root_url+`djangoapp/dealer/${id}`;
-  let reviews_url = root_url+`djangoapp/reviews/dealer/${id}`;
-  let post_review = root_url+`postreview/${id}`;
-  
-  const get_dealer = async ()=>{
-    const res = await fetch(dealer_url, {
-      method: "GET"
-    });
-    const retobj = await res.json();
-    
-    if(retobj.status === 200) {
-      let dealerobjs = Array.from(retobj.dealer)
-      setDealer(dealerobjs[0])
-    }
-  }
-
-  const get_reviews = async ()=>{
-    const res = await fetch(reviews_url, {
-      method: "GET"
-    });
-    const retobj = await res.json();
-    
-    if(retobj.status === 200) {
-      if(retobj.reviews.length > 0){
-        setReviews(retobj.reviews)
-      } else {
-        setUnreviewed(true);
-      }
-    }
-  }
-
-  const senti_icon = (sentiment)=>{
-    let icon = sentiment === "positive"?positive_icon:sentiment==="negative"?negative_icon:neutral_icon;
-    return icon;
-  }
+  const [loadingDealer, setLoadingDealer] = useState(true);
+  const [loadingReviews, setLoadingReviews] = useState(true);
+  const [dealerError, setDealerError] = useState('');
+  const [reviewsError, setReviewsError] = useState('');
+  const [retry, setRetry] = useState(0);
+  const { user } = useSession();
 
   useEffect(() => {
-    get_dealer();
-    get_reviews();
-    if(sessionStorage.getItem("username")) {
-      setPostReview(<a href={post_review}><img src={review_icon} style={{width:'10%',marginLeft:'10px',marginTop:'10px'}} alt='Post Review'/></a>)
+    const controller = new AbortController();
+    setDealer(null);
+    setReviews([]);
+    setDealerError('');
+    setReviewsError('');
+    setLoadingDealer(true);
+    setLoadingReviews(true);
 
-      
-    }
-  },[]);  
+    const loadDealer = async () => {
+      try {
+        const response = await fetch(`/djangoapp/dealer/${id}`, { signal: controller.signal });
+        if (response.status === 404) throw new Error('Dealer not found.');
+        if (!response.ok) throw new Error('Unable to load this dealership. Please try again.');
+        const data = await response.json();
+        if (data.status !== 200 || !Array.isArray(data.dealer) || !data.dealer[0]) {
+          throw new Error('Unable to load this dealership. Please try again.');
+        }
+        if (!controller.signal.aborted) setDealer(data.dealer[0]);
+      } catch (error) {
+        if (!controller.signal.aborted) {
+          setDealerError(error.message === 'Dealer not found.' ? error.message : 'Unable to load this dealership. Please try again.');
+        }
+      } finally {
+        if (!controller.signal.aborted) setLoadingDealer(false);
+      }
+    };
 
+    const loadReviews = async () => {
+      try {
+        const response = await fetch(`/djangoapp/reviews/dealer/${id}`, { signal: controller.signal });
+        if (!response.ok) throw new Error('Review request failed.');
+        const data = await response.json();
+        if (data.status !== 200 || !Array.isArray(data.reviews)) throw new Error('Invalid review response.');
+        if (!controller.signal.aborted) setReviews(data.reviews);
+      } catch (error) {
+        if (!controller.signal.aborted) setReviewsError('Unable to load reviews. Please try again.');
+      } finally {
+        if (!controller.signal.aborted) setLoadingReviews(false);
+      }
+    };
 
-return(
-  <div style={{margin:"20px"}}>
-      <Header/>
-      <div style={{marginTop:"10px"}}>
-      <h1 style={{color:"grey"}}>{dealer.full_name}{postReview}</h1>
-      <h4  style={{color:"grey"}}>{dealer['city']},{dealer['address']}, Zip - {dealer['zip']}, {dealer['state']} </h4>
-      </div>
-      <div class="reviews_panel">
-      {reviews.length === 0 && unreviewed === false ? (
-        <text>Loading Reviews....</text>
-      ):  unreviewed === true? <div>No reviews yet! </div> :
-      reviews.map(review => (
-        <div className='review_panel'>
-          <img src={senti_icon(review.sentiment)} className="emotion_icon" alt='Sentiment'/>
-          <div className='review'>{review.review}</div>
-          <div className="reviewer">{review.name} {review.car_make} {review.car_model} {review.car_year}</div>
-        </div>
-      ))}
-    </div>  
-  </div>
-)
-}
+    loadDealer();
+    loadReviews();
+    return () => controller.abort();
+  }, [id, retry]);
 
-export default Dealer
+  return (
+    <div>
+      <Header />
+      <main className="dealers-page">
+        <a href="/dealers" className="dealer-back-link">Back to dealerships</a>
+        {loadingDealer && <p role="status">Loading dealership…</p>}
+        {dealerError && <div className="alert alert-danger" role="alert">{dealerError}</div>}
+        {dealer && (
+          <>
+            <div className="dealer-heading">
+              <h1>{dealer.full_name}</h1>
+              {user && <a className="btn btn-info" href={`/postreview/${id}`}>Post Review</a>}
+            </div>
+            <p className="dealer-address">{dealer.address}, {dealer.city}, {dealer.state} {dealer.zip}</p>
+            <h2 className="dealer-reviews-heading">Customer reviews</h2>
+            {loadingReviews && <p role="status">Loading reviews…</p>}
+            {reviewsError && <div className="alert alert-danger" role="alert">{reviewsError}</div>}
+            {!loadingReviews && !reviewsError && reviews.length === 0 && <p>No reviews yet. Be the first to share your experience.</p>}
+            <div className="reviews_panel">
+              {reviews.map((review, index) => {
+                const sentiment = sentimentIcons[review.sentiment] ? review.sentiment : 'neutral';
+                return (
+                  <article className="review_panel" key={review.id ?? review._id ?? index}>
+                    <div className="review-sentiment">
+                      <img src={sentimentIcons[sentiment]} className="emotion_icon" alt={`${sentiment} sentiment`} />
+                      <span>{sentiment}</span>
+                    </div>
+                    <p className="review">{review.review}</p>
+                    <div className="reviewer">
+                      <strong>{review.name}</strong>
+                      {review.purchase && <span>{[review.car_year, review.car_make, review.car_model].filter(Boolean).join(' ')}</span>}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </>
+        )}
+        {(dealerError || reviewsError) && <button className="btn btn-outline-secondary" onClick={() => setRetry(value => value + 1)}>Try again</button>}
+      </main>
+    </div>
+  );
+};
+
+export default Dealer;

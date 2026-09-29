@@ -1,0 +1,80 @@
+Found 25 test(s).
+Operations to perform:
+  Synchronize unmigrated apps: messages, staticfiles
+  Apply all migrations: admin, auth, contenttypes, djangoapp, sessions
+Synchronizing apps without migrations:
+  Creating tables...
+    Running deferred SQL...
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying djangoapp.0001_initial... OK
+  Applying sessions.0001_initial... OK
+System check identified no issues (0 silenced).
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_anonymous_post_with_valid_csrf_is_rejected_before_backend (djangoapp.test_proxy.ReviewPostTests.test_anonymous_post_with_valid_csrf_is_rejected_before_backend) ... ok
+test_failed_insert_is_not_reported_as_success (djangoapp.test_proxy.ReviewPostTests.test_failed_insert_is_not_reported_as_success) ... Dealership proxy failed: Timeout
+Dealership proxy failed: HTTPError
+Dealership proxy failed: ValueError
+Dealership proxy failed: ValueError
+ok
+test_invalid_input_never_reaches_backend (djangoapp.test_proxy.ReviewPostTests.test_invalid_input_never_reaches_backend) ... ok
+test_real_login_csrf_and_session_allow_post_with_account_author (djangoapp.test_proxy.ReviewPostTests.test_real_login_csrf_and_session_allow_post_with_account_author) ... ok
+test_admin_lists_models_and_make_form_includes_inline_models (djangoapp.tests.CarAdminTests.test_admin_lists_models_and_make_form_includes_inline_models) ... ok
+test_admin_login_and_logout_with_csrf_protection (djangoapp.tests.CarAdminTests.test_admin_login_and_logout_with_csrf_protection) ... ok
+test_model_validation_rejects_invalid_choices_years_and_dealer_ids (djangoapp.tests.CarModelTests.test_model_validation_rejects_invalid_choices_years_and_dealer_ids) ... ok
+test_relationship_in_both_directions_and_cascade (djangoapp.tests.CarModelTests.test_relationship_in_both_directions_and_cascade) ... ok
+test_empty_database_returns_empty_list_without_populating (djangoapp.tests.GetCarsTests.test_empty_database_returns_empty_list_without_populating) ... ok
+test_post_is_rejected_without_creating_data (djangoapp.tests.GetCarsTests.test_post_is_rejected_without_creating_data) ... ok
+test_returns_all_models_and_correct_makes_in_one_query (djangoapp.tests.GetCarsTests.test_returns_all_models_and_correct_makes_in_one_query) ... ok
+test_invalid_existing_data_rolls_back_all_seed_changes (djangoapp.tests.PopulateTests.test_invalid_existing_data_rolls_back_all_seed_changes) ... ok
+test_seed_command_can_be_run_twice_without_duplicates (djangoapp.tests.PopulateTests.test_seed_command_can_be_run_twice_without_duplicates) ... ok
+test_seed_preserves_manual_records_and_fills_missing_data (djangoapp.tests.PopulateTests.test_seed_preserves_manual_records_and_fills_missing_data) ... ok
+test_all_dealers_and_state_filters_keep_frontend_contract (djangoapp.test_proxy.ProxyReadTests.test_all_dealers_and_state_filters_keep_frontend_contract) ... ok
+test_dealer_details_keep_array_and_return_404_when_missing (djangoapp.test_proxy.ProxyReadTests.test_dealer_details_keep_array_and_return_404_when_missing) ... ok
+test_each_review_receives_its_own_sentiment (djangoapp.test_proxy.ProxyReadTests.test_each_review_receives_its_own_sentiment) ... ok
+test_empty_reviews_do_not_call_sentiment (djangoapp.test_proxy.ProxyReadTests.test_empty_reviews_do_not_call_sentiment) ... ok
+test_invalid_sentiment_is_not_reported_as_a_neutral_review (djangoapp.test_proxy.ProxyReadTests.test_invalid_sentiment_is_not_reported_as_a_neutral_review) ... Dealership proxy failed: KeyError
+Dealership proxy failed: TypeError
+Dealership proxy failed: ValueError
+Dealership proxy failed: ConnectionError
+ok
+test_methods_and_id_converter_reject_invalid_requests (djangoapp.test_proxy.ProxyReadTests.test_methods_and_id_converter_reject_invalid_requests) ... ok
+test_network_and_invalid_backend_responses_return_http_502 (djangoapp.test_proxy.ProxyReadTests.test_network_and_invalid_backend_responses_return_http_502) ... Dealership proxy failed: Timeout
+Dealership proxy failed: HTTPError
+Dealership proxy failed: ValueError
+Dealership proxy failed: ValueError
+Dealership proxy failed: Timeout
+Dealership proxy failed: HTTPError
+Dealership proxy failed: ValueError
+Dealership proxy failed: ValueError
+Dealership proxy failed: Timeout
+Dealership proxy failed: HTTPError
+Dealership proxy failed: ValueError
+Dealership proxy failed: ValueError
+ok
+test_http_errors_and_invalid_json_propagate_to_views (djangoapp.test_proxy.RestApiTests.test_http_errors_and_invalid_json_propagate_to_views) ... ok
+test_post_sends_json_and_returns_the_saved_document (djangoapp.test_proxy.RestApiTests.test_post_sends_json_and_returns_the_saved_document) ... ok
+test_query_parameters_and_review_punctuation_survive_http_encoding (djangoapp.test_proxy.RestApiTests.test_query_parameters_and_review_punctuation_survive_http_encoding) ... ok
+test_bundled_lexicon_and_labels_work_without_a_running_server (djangoapp.test_proxy.SentimentServiceTests.test_bundled_lexicon_and_labels_work_without_a_running_server) ... ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 1.227s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...

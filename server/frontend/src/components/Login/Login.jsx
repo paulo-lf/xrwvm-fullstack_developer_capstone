@@ -3,6 +3,16 @@ import React, { useState } from 'react';
 import "./Login.css";
 import Header from '../Header/Header';
 
+function getCSRFToken() {
+  const cookie = document.cookie
+    .split("; ")
+    .find((item) => item.startsWith("csrftoken="));
+
+  return cookie
+    ? decodeURIComponent(cookie.slice("csrftoken=".length))
+    : "";
+}
+
 const Login = ({ onClose }) => {
 
   const [userName, setUserName] = useState("");
@@ -12,33 +22,51 @@ const Login = ({ onClose }) => {
   let login_url = window.location.origin+"/djangoapp/login";
 
   const login = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const res = await fetch(login_url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            "userName": userName,
-            "password": password
-        }),
+  try {
+    const response = await fetch(login_url, {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCSRFToken(),
+      },
+      body: JSON.stringify({
+        userName: userName,
+        password: password,
+      }),
     });
-    
-    const json = await res.json();
-    if (json.status != null && json.status === "Authenticated") {
-        sessionStorage.setItem('username', json.userName);
-        setOpen(false);        
+
+    const contentType =
+      response.headers.get("content-type") || "";
+
+    if (!contentType.includes("application/json")) {
+      alert("Login failed. Refresh the page and try again.");
+      return;
     }
-    else {
-      alert("The user could not be authenticated.")
+
+    const data = await response.json();
+
+    if (
+      response.ok &&
+      data.status === "Authenticated"
+    ) {
+      sessionStorage.setItem("username", data.userName);
+      window.location.href = "/dealers/";
+      return;
     }
+
+    alert(data.error || "The user could not be authenticated.");
+  } catch (error) {
+    alert("Could not reach the server. Please try again.");
+  }
 };
 
   if (!open) {
     window.location.href = "/";
   };
-  
+
 
   return (
     <div>
@@ -57,7 +85,7 @@ const Login = ({ onClose }) => {
               </div>
               <div>
               <span className="input_field">Password </span>
-              <input name="psw" type="password"  placeholder="Password" className="input_field" onChange={(e) => setPassword(e.target.value)}/>            
+              <input name="psw" type="password"  placeholder="Password" className="input_field" onChange={(e) => setPassword(e.target.value)}/>
               </div>
               <div>
               <input className="action_button" type="submit" value="Login"/>

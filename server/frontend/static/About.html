@@ -1,68 +1,60 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <!-- Link the style sheet here -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About Us | Best Cars</title>
+  <link rel="stylesheet" href="/static/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/style.css">
 </head>
-<div>
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:darkturquoise; height: 1in;">
-    <div class="container-fluid">
-      <h2 style="padding-right: 5%;">Dealerships</h2>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" style="font-size: larger;" aria-current="page" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" style="font-size: larger;" href="/about">About Us</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" style="font-size: larger;" href="/contact">Contact Us</a>
-          </li>
-        </ul>
+<body class="static-page">
+<nav class="navbar navbar-light site-nav" aria-label="Main navigation">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Dealerships</a>
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+      <li class="nav-item"><a class="nav-link active" aria-current="page" href="/about/">About Us</a></li>
+      <li class="nav-item"><a class="nav-link" href="/contact/">Contact Us</a></li>
+    </ul>
+  </div>
+</nav>
+<main class="page-shell about-panel">
+  <header class="page-intro" id="about-header">
+    <h1>About Us</h1>
+    <p>Welcome to Best Cars dealership, a premier automotive destination with branches spanning across the United States. Committed to excellence, we pride ourselves on providing top-tier customer service, a vast selection of quality vehicles, and an unwavering dedication to meeting the diverse automotive needs of our valued customers nationwide. At each of our locations, our team is driven by a passion for delivering exceptional experiences, making us your trusted partner on the road to automotive satisfaction.</p>
+  </header>
+  <section aria-labelledby="team-heading">
+    <h2 id="team-heading" class="visually-hidden">Meet our team</h2>
+    <div class="team-grid">
+    <article class="card team-card">
+      <img class="team-photo" src="/static/team-maya.jpg" alt="Portrait representing Maya Bennett" width="256" height="320">
+      <div class="card-body">
+        <h3 class="team-role">CEO</h3>
+        <p class="team-name">Maya Bennett</p>
+        <p>Maya steers the business towards success with strategic leadership, cultivating a customer-centric environment for automotive excellence.</p>
+        <a href="mailto:maya@bestcars.example">maya@bestcars.example</a>
       </div>
+    </article>
+    <article class="card team-card">
+      <img class="team-photo" src="/static/team-daniel.jpg" alt="Portrait representing Daniel Brooks" width="256" height="320">
+      <div class="card-body">
+        <h3 class="team-role">CMO</h3>
+        <p class="team-name">Daniel Brooks</p>
+        <p>Daniel orchestrates innovative marketing campaigns, driving brand visibility and consumer engagement, shaping the company’s narrative in the competitive landscape.</p>
+        <a href="mailto:daniel@bestcars.example">daniel@bestcars.example</a>
+      </div>
+    </article>
+    <article class="card team-card">
+      <img class="team-photo" src="/static/team-sofia.jpg" alt="Portrait representing Sofia Ramirez" width="256" height="320">
+      <div class="card-body">
+        <h3 class="team-role">CFO</h3>
+        <p class="team-name">Sofia Ramirez</p>
+        <p>Sofia oversees the financial health of the company, developing strategies to optimize resources and support sustained growth.</p>
+        <a href="mailto:sofia@bestcars.example">sofia@bestcars.example</a>
+      </div>
+    </article>
     </div>
-  </nav>
-  
-    <div class="card" style="width: 80%;margin: auto; margin-top:5%;">
-      <div class="banner" name="about-header">
-      <!-- Insert header information here -->
-      </div>
-      <div style="display: flex;flex-direction: row; margin:auto">
-      <div class="card" style="width: 30%;">
-        <img class="card-img-top" src="/static/person.png" alt="Card image">
-        <div class="card-body">
-          <p class="title">Person1</p>
-          <p>Person1 Title</p>
-          <p class="card-text">Some text that explains the person1 in about 2 short sentences</p>
-          <p>person1@example.com</p>
-        </div>
-      </div>
-
-      <div class="card" style="width: 30%;">
-        <img class="card-img-top" src="/static/person.png" alt="Card image">
-        <div class="card-body">
-          <p class="title">Person2</p>
-          <p>Person2 Title</p>
-          <p class="card-text">Some text that explains the person2 in about 2 short sentences</p>
-          <p>person2@example.com</p>
-        </div>
-      </div>
-
-      <div class="card" style="width: 30%;">
-        <img class="card-img-top" src="/static/person.png" alt="Card image">
-        <div class="card-body">
-          <p class="title">Person3</p>
-          <p>Person3 Title</p>
-          <p class="card-text">Some text that explains the person3 in about 2 short sentences</p>
-          <p>person3@example.com</p>
-        </div>
-      </div>
-    </div>
-    </div>
-    </div>
-    
-</div>
-
+  </section>
+</main>
+</body>
 </html>

@@ -1,0 +1,13 @@
+Screen Recording recheck: 2026-09-28T14:26:07.119243+00:00
+
+User confirmed Codex Screen & System Audio Recording is enabled in macOS Settings.
+Observed results from this still-running session:
+1. capture_dynamic_evidence.py --mode window: CoreGraphics preflight remained false; capture stopped.
+2. Independent native capture of an isolated blank test browser window:
+   /usr/sbin/screencapture reported: could not create image from window
+   Process exited with status 1; no new assessment images were produced.
+
+Next step: fully quit and reopen Codex, then retry window capture in a fresh session.
+
+RESOLVED: 2026-09-28T14:34:57.833679+00:00
+Host process was Visual Studio Code. After its Screen Recording permission was enabled, all six native browser views (seven image files) were captured successfully. See capture_window_manifest.json.

@@ -1,22 +1,43 @@
-# Uncomment the imports below before you add the function code
-# import requests
+"""HTTP clients used by the Django dealership proxy views."""
+
 import os
+from pathlib import Path
+from urllib.parse import quote
+
+import requests
 from dotenv import load_dotenv
 
-load_dotenv()
+
+# Resolve configuration beside this module, independent of the working directory.
+load_dotenv(Path(__file__).resolve().with_name(".env"))
 
 backend_url = os.getenv(
-    'backend_url', default="http://localhost:3030")
+    "backend_url", "http://127.0.0.1:3030"
+).rstrip("/")
 sentiment_analyzer_url = os.getenv(
-    'sentiment_analyzer_url',
-    default="http://localhost:5050/")
+    "sentiment_analyzer_url", "http://127.0.0.1:5050/"
+).rstrip("/")
 
-# def get_request(endpoint, **kwargs):
-# Add code for get requests to back end
 
-# def analyze_review_sentiments(text):
-# request_url = sentiment_analyzer_url+"analyze/"+text
-# Add code for retrieving sentiments
+def get_request(endpoint, **kwargs):
+    """Fetch backend JSON; keyword arguments become encoded query parameters."""
+    request_url = backend_url + "/" + endpoint.lstrip("/")
+    response = requests.get(request_url, params=kwargs, timeout=10)
+    response.raise_for_status()
+    return response.json()
 
-# def post_review(data_dict):
-# Add code for posting review
+
+def analyze_review_sentiments(text):
+    """Encode review text so punctuation cannot change the sentiment URL."""
+    request_url = sentiment_analyzer_url + "/analyze/" + quote(text, safe="")
+    response = requests.get(request_url, timeout=10)
+    response.raise_for_status()
+    return response.json()
+
+
+def post_review(data_dict):
+    """Submit review JSON, allowing HTTP/JSON errors to reach the calling view."""
+    request_url = backend_url + "/insert_review"
+    response = requests.post(request_url, json=data_dict, timeout=10)
+    response.raise_for_status()
+    return response.json()

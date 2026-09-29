@@ -1,0 +1,3 @@
+curl -sS -X GET "http://127.0.0.1:3030/fetchReviews/dealer/29"
+
+[{"_id":"6ab515c70eab6041fde345eb","id":3,"name":"Lion Reames","dealership":29,"review":"Expanded global groupware","purchase":true,"purchase_date":"10/20/2020","car_make":"Mazda","car_model":"MX-5","car_year":2003,"__v":0}]

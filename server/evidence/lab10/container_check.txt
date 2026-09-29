@@ -1,0 +1,19 @@
+Local sentiment container verification, 2026-09-28
+
+Build command, from server/djangoapp/microservices:
+docker build -t lab10-sentiment-check .
+
+Result: build completed successfully with Python 3.12, Flask, NLTK,
+and the bundled VADER lexicon.
+Image manifest list: sha256:4ebfbab724a3d57a17de76d811090831f22e2a608bc7e817a790041794f70c19
+
+Executed container check (network disabled):
+docker run --rm --network none lab10-sentiment-check python -c 'from app import app; response = app.test_client().get("/analyze/Fantastic%20services"); print("HTTP", response.status_code); print(response.content_type); print(response.get_data(as_text=True)); assert response.status_code == 200; assert response.get_json() == {"sentiment": "positive"}'
+
+Actual output:
+HTTP 200
+application/json
+{"sentiment":"positive"}
+
+Exit code: 0. The disposable check container was removed automatically.
+This verifies the local container; it is not evidence of Code Engine deployment.

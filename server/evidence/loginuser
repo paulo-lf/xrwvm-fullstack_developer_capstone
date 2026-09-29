@@ -1,0 +1,8 @@
+curl -sS -X POST "http://127.0.0.1:8000/djangoapp/login" \
+>   -b "$LOGIN_COOKIES" \
+>   -H "Content-Type: application/json" \
+>   -H "X-CSRFToken: $CSRF_TOKEN" \
+>   -d "$LOGIN_JSON" \
+>   -w '\nHTTP status: %{http_code}\n'
+{"userName": "admin", "status": "Authenticated"}
+HTTP status: 200

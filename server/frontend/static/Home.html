@@ -1,64 +1,105 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="static/style.css">
-  <link rel="stylesheet" href="static/bootstrap.min.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home | Best Cars</title>
+  <link rel="stylesheet" href="/static/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/style.css">
 <script>
+const logout = async (event) => {
+  // Prevent the link from navigating before the request finishes.
+  event.preventDefault();
 
-const logout = async (e) => {
-//Include the code for logout here.
+  try {
+    const response = await fetch("/djangoapp/logout", {
+      method: "GET",
+      credentials: "same-origin",
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || data.userName !== "") {
+      throw new Error("Logout was not confirmed.");
+    }
+
+    // Clear the username only after Django confirms logout.
+    sessionStorage.removeItem("username");
+
+    alert("You have been logged out.");
+    window.location.href = "/";
+  } catch (error) {
+    alert("Could not log out. Check that the server is running and try again.");
+  }
 };
 
-let checkSession = ()=>{
-  let curr_user = sessionStorage.getItem("username");
-
-  if (curr_user && curr_user !== "") {
-    document.getElementById("loginlogout").innerHTML = 
-    '<span class="homepage_links">' + curr_user +'</span>' +
-    '<a class="homepage_links" onclick="logout()" href="/">Logout</a>'
-  } else {
-    document.getElementById("loginlogout").innerHTML = 
-    '<a class="homepage_links" href="/login">Login</a>'+
-    '<a class="homepage_links"  href="/register">Register</a>'
+const checkSession = async () => {
+  const container = document.getElementById("loginlogout");
+  let username = "";
+  try {
+    const response = await fetch("/djangoapp/session", { credentials: "same-origin", cache: "no-store" });
+    if (!response.ok) throw new Error("Session check failed");
+    const session = await response.json();
+    username = session.authenticated ? session.userName : "";
+    if (username) sessionStorage.setItem("username", username);
+    else sessionStorage.removeItem("username");
+  } catch (error) {
+    container.textContent = "Could not check your login session. Refresh to try again.";
+    return;
   }
- }
+
+  container.replaceChildren();
+
+  if (username) {
+    const usernameLabel = document.createElement("span");
+    usernameLabel.className = "homepage_links";
+    usernameLabel.textContent = username;
+
+    const logoutLink = document.createElement("a");
+    logoutLink.className = "homepage_links";
+    logoutLink.href = "/";
+    logoutLink.textContent = "Logout";
+    logoutLink.addEventListener("click", logout);
+
+    container.append(usernameLabel, logoutLink);
+  } else {
+    const links = [
+      ["Login", "/login/"],
+      ["Register", "/register/"],
+    ];
+
+    for (const [label, destination] of links) {
+      const link = document.createElement("a");
+      link.className = "homepage_links";
+      link.href = destination;
+      link.textContent = label;
+
+      container.append(link);
+    }
+  }
+};
 </script>
 </head>
-<body onload="checkSession()">
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color:darkturquoise; height: 1in;">
+<body class="static-page" onload="checkSession()">
+<nav class="navbar navbar-light site-nav" aria-label="Main navigation">
   <div class="container-fluid">
-    <h2 style="padding-right: 5%;">Dealerships</h2>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" style="font-size: larger;" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" style="font-size: larger;" href="/about">About Us</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" style="font-size: larger;" href="/contact">Contact Us</a>
-        </li>
-      </ul>
-      <span class="navbar-text">
-        <div class="loginlink" id="loginlogout">
-        </div>
-        </span>
-    </div>
+    <a class="navbar-brand" href="/">Dealerships</a>
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="/about/">About Us</a></li>
+      <li class="nav-item"><a class="nav-link" href="/contact/">Contact Us</a></li>
+    </ul>
+    <div class="loginlink" id="loginlogout"></div>
   </div>
 </nav>
-<div style="display: flex;flex-direction: column;">
-<div class="card" style="width: 50%;margin-top: 50px;align-self: center;">
-  <img src="static/car_dealership.jpg" class="card-img-top" alt="...">
+<main class="page-shell home-content">
+<div class="card home-card">
+  <img src="/static/car_dealership.jpg" class="card-img-top" alt="Cars outside a dealership showroom">
   <div class="banner">
-    <h5>Welcome to our Dealerships!</h5>
-    <a href="/dealers" class="btn" style="background-color: aqua;margin:10px">View Dealerships</a>
+    <h1>Welcome to our Dealerships!</h1>
+    <a href="/dealers/" class="btn" style="background-color: aqua;margin:10px">View Dealerships</a>
   </div>
 </div>
-</div>
+</main>
 </body>
 </html>

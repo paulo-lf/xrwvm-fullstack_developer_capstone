@@ -1,0 +1,10 @@
+.git
+djangoenv/
+.venv/
+**/node_modules/
+**/__pycache__/
+**/*.pyc
+**/.env
+**/.env.*
+**/.DS_Store
+evidence/

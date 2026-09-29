@@ -1,0 +1,63 @@
+{
+  "captured_at_utc": "2026-09-28T14:34:57.833679+00:00",
+  "base_url": "http://127.0.0.1:8000",
+  "mode": "window",
+  "address_bar_visible": true,
+  "assessment_screenshot_requirement_met": true,
+  "screenshots": [
+    {
+      "name": "get_dealers",
+      "url": "http://127.0.0.1:8000/dealers/",
+      "files": [
+        "task_17/get_dealers.png"
+      ]
+    },
+    {
+      "name": "get_dealers_loggedin",
+      "url": "http://127.0.0.1:8000/dealers/",
+      "files": [
+        "task_18/get_dealers_loggedin.png"
+      ]
+    },
+    {
+      "name": "dealersbystate",
+      "url": "http://127.0.0.1:8000/dealers/",
+      "files": [
+        "task_19/dealersbystate.png"
+      ]
+    },
+    {
+      "name": "dealer_id_reviews",
+      "url": "http://127.0.0.1:8000/dealer/29",
+      "files": [
+        "task_20/dealer_id_reviews.png"
+      ]
+    },
+    {
+      "name": "dealership_review_submission",
+      "url": "http://127.0.0.1:8000/postreview/29",
+      "files": [
+        "task_21/dealership_review_submission.png"
+      ]
+    },
+    {
+      "name": "added_review",
+      "url": "http://127.0.0.1:8000/dealer/29",
+      "files": [
+        "task_22/added_review.png"
+      ]
+    }
+  ],
+  "checks": [
+    "Logged-out dealer list loads without review links.",
+    "Anonymous direct review URL requires sign-in and hides the form.",
+    "Login through the UI enables review links.",
+    "State filter displays only California dealerships.",
+    "Restoring All States returns all 50 dealerships.",
+    "Dealer link loads its details, customer reviews, and sentiment.",
+    "Reused the already submitted demonstration review; no duplicate was created.",
+    "Saved review appears with positive sentiment and selected car details."
+  ],
+  "console_errors": [],
+  "completed": true
+}

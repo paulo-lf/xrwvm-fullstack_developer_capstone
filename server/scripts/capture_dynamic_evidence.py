@@ -1,10 +1,10 @@
 """Capture Lab 11's real browser workflow, without fabricating browser chrome.
 
-Requires the optional local tools ``playwright`` and ``Pillow``. Window mode
+Requires the optional local tool ``playwright``. Window mode
 requires macOS screen-recording permission and an installed Playwright Chromium.
 Page mode saves supporting screenshots only: those omit the browser address bar
-and are deliberately stored in evidence/lab11/page_only rather than submission
-paths. The account file is local JSON with username/password; it is never saved
+and are stored in the temporary directory's dealership_page_evidence folder.
+The account file is local JSON with username/password; it is never saved
 in the evidence. Running this script may create one local demonstration review.
 """
 
@@ -17,7 +17,6 @@ import subprocess
 import tempfile
 from urllib.parse import urlparse
 
-from PIL import Image
 from playwright.sync_api import expect, sync_playwright
 
 
@@ -25,6 +24,14 @@ REVIEW = (
     "Excellent service! The friendly team made buying my Toyota Corolla easy "
     "and enjoyable. I highly recommend this dealership."
 )
+SCREENSHOT_TASKS = {
+    "get_dealers": "task_17",
+    "get_dealers_loggedin": "task_18",
+    "dealersbystate": "task_19",
+    "dealer_id_reviews": "task_20",
+    "dealership_review_submission": "task_21",
+    "added_review": "task_22",
+}
 SCREEN_ACCESS = "import CoreGraphics\nprint(CGPreflightScreenCaptureAccess())\n"
 WINDOWS = r"""
 import Foundation
@@ -70,8 +77,10 @@ def main():
 
     account = json.loads(args.account_file.read_text())
     evidence = Path(__file__).resolve().parent.parent / "evidence"
-    supporting = evidence / "lab11"
-    destination = evidence if args.mode == "window" else supporting / "page_only"
+    destination = (
+        evidence if args.mode == "window"
+        else Path(tempfile.gettempdir()) / "dealership_page_evidence"
+    )
     destination.mkdir(parents=True, exist_ok=True)
     manifest = {
         "captured_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -93,7 +102,9 @@ def main():
     def capture(page, name):
         nonlocal capture_window_id
         page.wait_for_timeout(250)
-        png = destination / f"{name}.png"
+        screenshot_dir = destination / SCREENSHOT_TASKS[name] if args.mode == "window" else destination
+        screenshot_dir.mkdir(parents=True, exist_ok=True)
+        png = screenshot_dir / f"{name}.png"
         if args.mode == "window":
             page.bring_to_front()
             windows = json.loads(swift_result(WINDOWS))
@@ -113,13 +124,7 @@ def main():
             )
         else:
             page.screenshot(path=str(png), full_page=False)
-        paths = [str(png.relative_to(evidence))]
-        if name == "dealership_review_submission":
-            jpeg = png.with_suffix(".jpeg")
-            # Format conversion only; no additions, overlays, or retouching.
-            with Image.open(png) as original:
-                original.convert("RGB").save(jpeg, quality=95)
-            paths.append(str(jpeg.relative_to(evidence)))
+        paths = [str(png.relative_to(destination))]
         manifest["screenshots"].append({"name": name, "url": page.url, "files": paths})
         print(f"Saved {name}: {page.url}", flush=True)
 
@@ -232,7 +237,7 @@ def main():
         context.storage_state(path=state_file)
         browser.close()
 
-    manifest_path = supporting / f"capture_{args.mode}_manifest.json"
+    manifest_path = destination / f"capture_{args.mode}_manifest.json"
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
     print(f"Saved {manifest_path}")
 

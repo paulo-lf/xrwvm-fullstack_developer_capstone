@@ -34,7 +34,7 @@ def main():
     except (KeyError, TypeError, ValueError) as exc:
         parser.exit(1, f"Unexpected API response: {exc}. Evidence was not replaced.\n")
 
-    evidence = Path(__file__).resolve().parent.parent / "evidence" / "getallcarmakes"
+    evidence = Path(__file__).resolve().parent.parent / "evidence" / "task_14_15" / "getallcarmakes"
     evidence.parent.mkdir(parents=True, exist_ok=True)
     # Preserve curl's actual response rather than constructing sample JSON.
     evidence.write_text(shlex.join(command) + "\n" + result.stdout.rstrip("\n") + "\n", encoding="utf-8")

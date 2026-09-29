@@ -1,0 +1,30 @@
+{
+  "captured_at_utc": "2026-09-29T16:05:54.474433+00:00",
+  "base_url": "http://localhost:8000",
+  "deployment": "Docker Desktop Kubernetes / default / dealership",
+  "capture_method": "Native macOS browser-window capture; no overlays or retouching",
+  "address_bar_visible": true,
+  "scope": "Local deployment evidence; not an IBM Skills Network public URL",
+  "screenshots": [
+    {
+      "file": "task_25/deployed_landingpage.png",
+      "url": "http://localhost:8000/login/"
+    },
+    {
+      "file": "task_26/deployed_loggedin.png",
+      "url": "http://localhost:8000/"
+    },
+    {
+      "file": "task_27/deployed_dealer_detail.png",
+      "url": "http://localhost:8000/dealer/29"
+    },
+    {
+      "file": "task_28/deployed_add_review.png",
+      "url": "http://localhost:8000/dealer/29"
+    }
+  ],
+  "page_errors": [],
+  "review_action": "Created one local lab demonstration review through the UI.",
+  "completed": true,
+  "review_text": "Excellent service during my Kubernetes deployment test! The friendly team made buying my Toyota Corolla easy and enjoyable. Highly recommended."
+}

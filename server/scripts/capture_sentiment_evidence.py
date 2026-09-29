@@ -46,7 +46,7 @@ def main():
     except ValueError as error:
         parser.exit(1, f"Unexpected response: {error}. Evidence was not replaced.\n")
 
-    evidence = server_dir / "evidence" / "analyzereview"
+    evidence = server_dir / "evidence" / "task_16" / "analyzereview"
     evidence.parent.mkdir(parents=True, exist_ok=True)
     # Only replace the evidence after validating the real curl response.
     evidence.write_text(

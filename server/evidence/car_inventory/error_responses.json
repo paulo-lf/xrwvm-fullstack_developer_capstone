@@ -1,0 +1,23 @@
+{
+  "recorded_at_utc": "2026-09-30T09:43:28.806648+00:00",
+  "checks": [
+    {
+      "url": "http://127.0.0.1:8000/djangoapp/get_inventory/29",
+      "condition": "Inventory service not started",
+      "http_status": 502,
+      "body": {
+        "status": 502,
+        "message": "A backend service could not complete the request."
+      }
+    },
+    {
+      "url": "http://127.0.0.1:8000/djangoapp/get_inventory",
+      "condition": "Missing dealer ID",
+      "http_status": 400,
+      "body": {
+        "status": 400,
+        "message": "Bad Request: a positive dealer ID is required."
+      }
+    }
+  ]
+}

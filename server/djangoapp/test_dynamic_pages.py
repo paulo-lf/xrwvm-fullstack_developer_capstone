@@ -17,7 +17,7 @@ class DynamicPagesTests(TestCase):
         )
 
     def test_direct_page_loads_render_react_and_supply_csrf(self):
-        for url in ("/dealers/", "/dealer/29", "/postreview/29"):
+        for url in ("/dealers/", "/dealer/29", "/postreview/29", "/searchcars/29"):
             with self.subTest(url=url):
                 response = self.client.get(url)
                 self.assertEqual(response.status_code, 200)

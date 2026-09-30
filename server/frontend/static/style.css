@@ -125,7 +125,7 @@ img{
     box-shadow: 2px 2px 3px #999;  
 }
 
-/* Static lab pages, matching the supplied lab screenshots. */
+/* Static lab pages with the front-end enhancement colour scheme. */
 .static-page {
   background: #fff;
   color: #303030;
@@ -133,7 +133,7 @@ img{
 }
 
 .site-nav {
-  background: #08bed0;
+  background: mediumspringgreen;
   min-height: 96px;
   padding: 8px 0;
 }
@@ -166,7 +166,7 @@ img{
 
 .site-nav .nav-link {
   padding: 8px;
-  color: #28717b;
+  color: #173f45;
   font-size: 20px;
   font-weight: 400;
   text-decoration: none;
@@ -211,6 +211,27 @@ img{
 .home-card .card-img-top { width: 100%; }
 .home-card .banner { padding: 1.5rem; text-align: center; }
 .home-card h1 { font-size: 1.75rem; }
+
+.home-dealers-button {
+  background-color: plum;
+  color: #302034;
+  border: 2px solid transparent;
+  margin: 10px;
+  padding: 10px 20px;
+  font-weight: 600;
+}
+
+.home-dealers-button:hover,
+.home-dealers-button:focus-visible {
+  background-color: #cf8fcf;
+  color: #302034;
+  border-color: purple;
+}
+
+.home-dealers-button:focus-visible {
+  outline: 2px solid purple;
+  outline-offset: 3px;
+}
 
 @media (max-width: 760px) {
   .site-nav .container-fluid { row-gap: 12px; }

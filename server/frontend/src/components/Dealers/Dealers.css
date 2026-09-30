@@ -7,6 +7,11 @@
   font-size: 2rem;
 }
 
+.dealers-page .table-responsive {
+  /* Keep the absolutely positioned accessible label inside the scroller. */
+  position: relative;
+}
+
 .dealers-table {
   width: 100%;
   border: 1px solid #ccd7d9;
@@ -20,11 +25,16 @@
 }
 
 .dealers-table th {
-  background-color: #dff7f7;
+  background-color: #e3faef;
 }
 
-.dealers-table .form-select {
-  min-width: 130px;
+.dealers-table .state-search {
+  min-width: 170px;
+}
+
+.dealers-table .state-search:focus {
+  border-color: purple;
+  box-shadow: 0 0 0 3px rgba(128, 0, 128, 0.15);
 }
 
 .dealer-back-link {
@@ -41,6 +51,25 @@
 
 .dealer-heading h1 {
   margin-bottom: 0;
+}
+
+.dealer-search-link {
+  background-color: plum;
+  color: #302034;
+  border: 2px solid transparent;
+  font-weight: 600;
+}
+
+.dealer-search-link:hover,
+.dealer-search-link:focus-visible {
+  background-color: #cf8fcf;
+  border-color: purple;
+  color: #302034;
+}
+
+.dealer-search-link:focus-visible {
+  outline: 2px solid purple;
+  outline-offset: 3px;
 }
 
 .dealer-address {
@@ -63,7 +92,8 @@
 .review_panel {
   display: flex;
   flex-direction: column;
-  border: 1px solid #bbcfd1;
+  border: 2px solid purple;
+  background-color: #fffaff;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
@@ -95,15 +125,20 @@
   gap: 4px;
   margin-top: auto;
   color: #5b6568;
-  font-size: 0.9rem;
+  font-size: 18px;
+  text-align: center;
+  line-height: 1.5;
 }
 
 .review_icon {
   width: 36px;
+  border: 2px solid transparent;
+  border-radius: 6px;
 }
 
-.review_icon:hover {
-  transform: scale(1.1);
+.review_icon:hover,
+a:focus-visible .review_icon {
+  border: 2px solid #080808;
 }
 
 .postreview {

@@ -16,7 +16,9 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_POST
 
 from .models import CarModel
-from .restapis import analyze_review_sentiments, get_request, post_review
+from .restapis import (
+    analyze_review_sentiments, get_request, post_review, searchcars_request,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -214,6 +216,57 @@ def proxy_error(error):
         {"status": 502, "message": "A backend service could not complete the request."},
         status=502,
     )
+
+
+@require_GET
+def get_inventory(request, dealer_id=None):
+    """Proxy one inventory filter, keeping the course's filter precedence."""
+    if dealer_id is None or not 0 < dealer_id < 2**53:
+        return JsonResponse(
+            {"status": 400, "message": "Bad Request: a positive dealer ID is required."},
+            status=400,
+        )
+
+    endpoint = f"/cars/{dealer_id}"
+    # Part 3 sends one changed filter at a time and combines selections in React.
+    filters = (
+        ("year", "carsbyyear"),
+        ("make", "carsbymake"),
+        ("model", "carsbymodel"),
+        ("mileage", "carsbymaxmileage"),
+        ("price", "carsbyprice"),
+    )
+    for field, route in filters:
+        if field not in request.GET:
+            continue
+        value = request.GET[field].strip()
+        valid = bool(value) and len(value) <= 120 and len(request.GET.getlist(field)) == 1
+        if field in ("year", "mileage", "price"):
+            valid = valid and value.isascii() and value.isdigit()
+            if valid:
+                number = int(value)
+                if field == "year":
+                    valid = 1000 <= number <= 9999
+                elif field == "mileage":
+                    valid = number in (50000, 100000, 150000, 200000, 200001)
+                else:
+                    valid = number in (20000, 40000, 60000, 80000, 80001)
+                value = str(number)
+        if not valid:
+            return JsonResponse(
+                {"status": 400, "message": f"Bad Request: invalid {field} filter."},
+                status=400,
+            )
+        endpoint = f"/{route}/{dealer_id}/{quote(value, safe='')}"
+        break
+
+    try:
+        cars = searchcars_request(endpoint)
+        if not isinstance(cars, list):
+            raise ValueError("Expected a car inventory list")
+    except (requests.RequestException, ValueError) as error:
+        return proxy_error(error)
+    return JsonResponse({"status": 200, "cars": cars})
 
 
 @require_GET

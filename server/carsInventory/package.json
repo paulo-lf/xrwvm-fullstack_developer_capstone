@@ -1,0 +1,21 @@
+{
+  "name": "cars-inventory",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local car inventory microservice for the dealership capstone",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.0.1"
+  }
+}

@@ -1,0 +1,514 @@
+{
+  "verified_at_utc": "2026-09-30T09:56:31.451700+00:00",
+  "inventory_url": "http://127.0.0.1:3050",
+  "django_url": "http://127.0.0.1:8000",
+  "seed_records": 214,
+  "seed_sha256": "9daabaaa899a5b050cd0369fc27138b2e9a7e261bdbe809d6acc29c9e7d5d2f3",
+  "checks": [
+    {
+      "url": "http://127.0.0.1:3050/",
+      "status": 200,
+      "message": "Welcome to the Mongoose API"
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/1",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/1",
+      "status": 200,
+      "matching_records": 3
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/2",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/2",
+      "status": 200,
+      "matching_records": 2
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/3",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/3",
+      "status": 200,
+      "matching_records": 1
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/4",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/4",
+      "status": 200,
+      "matching_records": 0
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/5",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/5",
+      "status": 200,
+      "matching_records": 3
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/6",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/6",
+      "status": 200,
+      "matching_records": 4
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/7",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/7",
+      "status": 200,
+      "matching_records": 5
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/8",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/8",
+      "status": 200,
+      "matching_records": 7
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/9",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/9",
+      "status": 200,
+      "matching_records": 5
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/10",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/10",
+      "status": 200,
+      "matching_records": 4
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/11",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/11",
+      "status": 200,
+      "matching_records": 4
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/12",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/12",
+      "status": 200,
+      "matching_records": 3
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/13",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/13",
+      "status": 200,
+      "matching_records": 3
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/14",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/14",
+      "status": 200,
+      "matching_records": 5
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/15",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/15",
+      "status": 200,
+      "matching_records": 7
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/16",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/16",
+      "status": 200,
+      "matching_records": 4
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/17",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/17",
+      "status": 200,
+      "matching_records": 4
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/18",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/18",
+      "status": 200,
+      "matching_records": 6
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/19",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/19",
+      "status": 200,
+      "matching_records": 6
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/20",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/20",
+      "status": 200,
+      "matching_records": 4
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/21",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/21",
+      "status": 200,
+      "matching_records": 5
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/22",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/22",
+      "status": 200,
+      "matching_records": 8
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/23",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/23",
+      "status": 200,
+      "matching_records": 8
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/24",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/24",
+      "status": 200,
+      "matching_records": 6
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/25",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/25",
+      "status": 200,
+      "matching_records": 6
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/26",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/26",
+      "status": 200,
+      "matching_records": 6
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/27",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/27",
+      "status": 200,
+      "matching_records": 4
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/28",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/28",
+      "status": 200,
+      "matching_records": 6
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/29",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29",
+      "status": 200,
+      "matching_records": 6
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/30",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/30",
+      "status": 200,
+      "matching_records": 9
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/31",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/31",
+      "status": 200,
+      "matching_records": 5
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/32",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/32",
+      "status": 200,
+      "matching_records": 1
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/33",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/33",
+      "status": 200,
+      "matching_records": 4
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/34",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/34",
+      "status": 200,
+      "matching_records": 4
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/35",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/35",
+      "status": 200,
+      "matching_records": 5
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/36",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/36",
+      "status": 200,
+      "matching_records": 4
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/37",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/37",
+      "status": 200,
+      "matching_records": 4
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/38",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/38",
+      "status": 200,
+      "matching_records": 6
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/39",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/39",
+      "status": 200,
+      "matching_records": 6
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/40",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/40",
+      "status": 200,
+      "matching_records": 5
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/41",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/41",
+      "status": 200,
+      "matching_records": 1
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/42",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/42",
+      "status": 200,
+      "matching_records": 2
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/43",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/43",
+      "status": 200,
+      "matching_records": 4
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/44",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/44",
+      "status": 200,
+      "matching_records": 3
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/45",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/45",
+      "status": 200,
+      "matching_records": 2
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/46",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/46",
+      "status": 200,
+      "matching_records": 4
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/47",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/47",
+      "status": 200,
+      "matching_records": 6
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/48",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/48",
+      "status": 200,
+      "matching_records": 2
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/49",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/49",
+      "status": 200,
+      "matching_records": 2
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/50",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/50",
+      "status": 200,
+      "matching_records": 0
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/cars/99999",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/99999",
+      "status": 200,
+      "matching_records": 0
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbymake/29/Audi",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?make=Audi",
+      "status": 200,
+      "matching_records": 3
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbymake/29/audi",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?make=audi",
+      "status": 200,
+      "matching_records": 0
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbymodel/29/Land%20Cruiser",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?model=Land+Cruiser",
+      "status": 200,
+      "matching_records": 2
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbymodel/29/Missing%20model",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?model=Missing+model",
+      "status": 200,
+      "matching_records": 0
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbyyear/29/2020",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?year=2020",
+      "status": 200,
+      "matching_records": 6
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbyyear/29/2021",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?year=2021",
+      "status": 200,
+      "matching_records": 3
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbyyear/29/2022",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?year=2022",
+      "status": 200,
+      "matching_records": 0
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbymaxmileage/29/50000",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?mileage=50000",
+      "status": 200,
+      "matching_records": 6
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbymaxmileage/29/100000",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?mileage=100000",
+      "status": 200,
+      "matching_records": 0
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbymaxmileage/29/150000",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?mileage=150000",
+      "status": 200,
+      "matching_records": 0
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbymaxmileage/29/200000",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?mileage=200000",
+      "status": 200,
+      "matching_records": 0
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbymaxmileage/29/200001",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?mileage=200001",
+      "status": 200,
+      "matching_records": 0
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbyprice/29/20000",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?price=20000",
+      "status": 200,
+      "matching_records": 0
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbyprice/29/40000",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?price=40000",
+      "status": 200,
+      "matching_records": 2
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbyprice/29/60000",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?price=60000",
+      "status": 200,
+      "matching_records": 1
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbyprice/29/80000",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?price=80000",
+      "status": 200,
+      "matching_records": 3
+    },
+    {
+      "inventory_url": "http://127.0.0.1:3050/carsbyprice/29/80001",
+      "django_url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?price=80001",
+      "status": 200,
+      "matching_records": 0
+    },
+    {
+      "url": "http://127.0.0.1:3050/cars/0",
+      "status": 400,
+      "body": {
+        "error": "Dealer ID must be a positive integer"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:3050/cars/invalid",
+      "status": 400,
+      "body": {
+        "error": "Dealer ID must be a positive integer"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:3050/carsbyyear/29/2021x",
+      "status": 400,
+      "body": {
+        "error": "Year must be a positive integer"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:3050/carsbymaxmileage/29/75000",
+      "status": 400,
+      "body": {
+        "error": "Mileage must be one of 50000, 100000, 150000, 200000, 200001"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:3050/carsbyprice/29/30000",
+      "status": 400,
+      "body": {
+        "error": "Price must be one of 20000, 40000, 60000, 80000, 80001"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:8000/djangoapp/get_inventory",
+      "status": 400,
+      "body": {
+        "status": 400,
+        "message": "Bad Request: a positive dealer ID is required."
+      }
+    },
+    {
+      "url": "http://127.0.0.1:8000/djangoapp/get_inventory/0",
+      "status": 400,
+      "body": {
+        "status": 400,
+        "message": "Bad Request: a positive dealer ID is required."
+      }
+    },
+    {
+      "url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?year=2021x",
+      "status": 400,
+      "body": {
+        "status": 400,
+        "message": "Bad Request: invalid year filter."
+      }
+    },
+    {
+      "url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?mileage=75000",
+      "status": 400,
+      "body": {
+        "status": 400,
+        "message": "Bad Request: invalid mileage filter."
+      }
+    },
+    {
+      "url": "http://127.0.0.1:8000/djangoapp/get_inventory/29?price=30000",
+      "status": 400,
+      "body": {
+        "status": 400,
+        "message": "Bad Request: invalid price filter."
+      }
+    },
+    {
+      "url": "http://127.0.0.1:8000/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8000/dealers/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8000/djangoapp/get_dealers",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8000/djangoapp/reviews/dealer/29",
+      "status": 200
+    }
+  ],
+  "completed": true
+}

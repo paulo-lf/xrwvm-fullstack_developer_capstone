@@ -1,0 +1,45 @@
+{
+  "captured_at_utc": "2026-09-30T10:10:48.834337+00:00",
+  "base_url": "http://127.0.0.1:8000",
+  "address_bar_visible": false,
+  "mode": "Local Chromium page-content screenshots",
+  "checks": [
+    "Anonymous users can open Search Cars from dealer 21 and see all five inventory records.",
+    "All five filters reproduce the lab example: Audi A6, 2022, 5,000 miles, $70,000.",
+    "At 390px width all filters and the result card fit without horizontal page overflow.",
+    "No-match recovery, individual All selections, reset and make/model changes restore the correct records.",
+    "Direct page refresh and Back to dealership navigation work.",
+    "Model names with spaces reach the API correctly and select their matching make.",
+    "A valid dealer with no inventory and an unknown dealer display distinct states.",
+    "A browser-simulated inventory HTTP 502 displays an error; retry recovers from the live service.",
+    "No uncaught browser JavaScript errors occurred."
+  ],
+  "screenshots": [
+    {
+      "file": "dealer_search_link.png",
+      "url": "http://127.0.0.1:8000/dealer/21"
+    },
+    {
+      "file": "all_cars.png",
+      "url": "http://127.0.0.1:8000/searchcars/21"
+    },
+    {
+      "file": "audi_a6_filtered.png",
+      "url": "http://127.0.0.1:8000/searchcars/21"
+    },
+    {
+      "file": "inventory_mobile.png",
+      "url": "http://127.0.0.1:8000/searchcars/21"
+    },
+    {
+      "file": "no_matches.png",
+      "url": "http://127.0.0.1:8000/searchcars/21"
+    },
+    {
+      "file": "inventory_error.png",
+      "url": "http://127.0.0.1:8000/searchcars/21"
+    }
+  ],
+  "page_errors": [],
+  "completed": true
+}

@@ -37,4 +37,9 @@ urlpatterns = [
         ensure_csrf_cookie(TemplateView.as_view(template_name="index.html")),
         name='postreview',
     ),
+    path(
+        'searchcars/<int:dealer_id>',
+        ensure_csrf_cookie(TemplateView.as_view(template_name="index.html")),
+        name='searchcars',
+    ),
 ]

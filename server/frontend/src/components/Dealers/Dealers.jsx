@@ -6,39 +6,34 @@ import useSession from '../../hooks/useSession';
 import reviewIcon from '../assets/reviewicon.png';
 
 const Dealers = () => {
-  const [dealers, setDealers] = useState([]);
-  const [states, setStates] = useState([]);
-  const [selectedState, setSelectedState] = useState('All');
+  const [originalDealers, setOriginalDealers] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [retry, setRetry] = useState(0);
   const { user } = useSession();
   const isLoggedIn = Boolean(user);
+  const dealers = originalDealers.filter(dealer => (
+    (dealer.state || '').toLowerCase().includes(searchQuery.toLowerCase())
+  ));
 
   useEffect(() => {
     const controller = new AbortController();
     const loadDealers = async () => {
       setLoading(true);
       setError('');
-      const url = selectedState === 'All'
-        ? '/djangoapp/get_dealers'
-        : `/djangoapp/get_dealers/${encodeURIComponent(selectedState)}`;
-
       try {
-        const response = await fetch(url, { signal: controller.signal });
+        const response = await fetch('/djangoapp/get_dealers', { signal: controller.signal });
         if (!response.ok) throw new Error('Dealership request failed.');
         const data = await response.json();
         if (data.status !== 200 || !Array.isArray(data.dealers)) {
           throw new Error('Invalid dealership response.');
         }
         if (controller.signal.aborted) return;
-        setDealers(data.dealers);
-        if (selectedState === 'All') {
-          setStates([...new Set(data.dealers.map(dealer => dealer.state).filter(Boolean))].sort());
-        }
+        setOriginalDealers(data.dealers);
       } catch (requestError) {
         if (!controller.signal.aborted) {
-          setDealers([]);
+          setOriginalDealers([]);
           setError('Unable to load dealerships. Please try again.');
         }
       } finally {
@@ -48,7 +43,7 @@ const Dealers = () => {
 
     loadDealers();
     return () => controller.abort();
-  }, [selectedState, retry]);
+  }, [retry]);
 
   return (
     <div>
@@ -73,10 +68,15 @@ const Dealers = () => {
                 <th scope="col">Zip</th>
                 <th scope="col">
                   <label htmlFor="state" className="visually-hidden">Filter dealerships by state</label>
-                  <select name="state" id="state" className="form-select" value={selectedState} onChange={event => setSelectedState(event.target.value)}>
-                    <option value="All">All States</option>
-                    {states.map(state => <option key={state} value={state}>{state}</option>)}
-                  </select>
+                  <input
+                    type="text"
+                    name="state"
+                    id="state"
+                    className="form-control state-search"
+                    placeholder="Search states..."
+                    value={searchQuery}
+                    onChange={event => setSearchQuery(event.target.value)}
+                  />
                 </th>
                 {isLoggedIn && <th scope="col">Review Dealer</th>}
               </tr>

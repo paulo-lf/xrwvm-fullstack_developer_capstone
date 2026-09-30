@@ -1,5 +1,6 @@
 """HTTP clients used by the Django dealership proxy views."""
 
+import logging
 import os
 from pathlib import Path
 from urllib.parse import quote
@@ -17,6 +18,11 @@ backend_url = os.getenv(
 sentiment_analyzer_url = os.getenv(
     "sentiment_analyzer_url", "http://127.0.0.1:5050/"
 ).rstrip("/")
+searchcars_url = os.getenv(
+    "searchcars_url", "http://127.0.0.1:3050/"
+).rstrip("/")
+
+logger = logging.getLogger(__name__)
 
 
 def get_request(endpoint, **kwargs):
@@ -25,6 +31,16 @@ def get_request(endpoint, **kwargs):
     response = requests.get(request_url, params=kwargs, timeout=10)
     response.raise_for_status()
     return response.json()
+
+
+def searchcars_request(endpoint, **kwargs):
+    """Read inventory JSON; the view maps upstream HTTP/network failures to 502."""
+    request_url = searchcars_url + "/" + endpoint.lstrip("/")
+    response = requests.get(request_url, params=kwargs, timeout=10)
+    response.raise_for_status()
+    result = response.json()
+    logger.debug("Car inventory request completed successfully")
+    return result
 
 
 def analyze_review_sentiments(text):

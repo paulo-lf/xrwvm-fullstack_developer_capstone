@@ -1,3 +1,27 @@
+.app-navbar {
+  background-color: mediumspringgreen;
+}
+
+.app-navbar a {
+  color: #173f45;
+}
+
+.app-navbar a:hover {
+  color: purple;
+}
+
+.app-navbar a:focus-visible {
+  outline: 2px solid #173f45;
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .app-navbar .container-fluid {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 img{
   width: 60%;
   align-self: center;

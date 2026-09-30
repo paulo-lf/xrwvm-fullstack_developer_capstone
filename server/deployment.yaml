@@ -27,6 +27,8 @@ spec:
               value: "http://host.docker.internal:3030"
             - name: sentiment_analyzer_url
               value: "http://host.docker.internal:5050"
+            - name: searchcars_url
+              value: "http://host.docker.internal:3050"
           readinessProbe:
             httpGet:
               path: /login/

@@ -79,6 +79,7 @@ const Dealer = () => {
           <>
             <div className="dealer-heading">
               <h1>{dealer.full_name}</h1>
+              <a className="btn dealer-search-link" href={`/searchcars/${id}`}>Search Cars</a>
               {user && <a className="btn btn-info" href={`/postreview/${id}`}>Post Review</a>}
             </div>
             <p className="dealer-address">{dealer.address}, {dealer.city}, {dealer.state} {dealer.zip}</p>

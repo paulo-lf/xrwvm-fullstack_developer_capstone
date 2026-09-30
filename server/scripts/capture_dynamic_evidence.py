@@ -172,25 +172,25 @@ def main():
         dealer_link = page.locator(f'a[href="/dealer/{args.dealer_id}"]')
         dealer_row = page.locator("tbody tr").filter(has=dealer_link)
         state = dealer_row.locator("td").nth(5).inner_text().strip()
-        with page.expect_response(lambda response: response.url.endswith(f"/djangoapp/get_dealers/{state}")):
-            page.get_by_label("Filter dealerships by state").select_option(state)
+        state_search = page.get_by_role("textbox", name="Filter dealerships by state")
+        state_search.fill(state.lower())
         page.wait_for_function(
             "state => { const cells = [...document.querySelectorAll('tbody tr td:nth-child(6)')]; "
-            "return cells.length > 0 && cells.every(cell => cell.textContent.trim() === state); }",
+            "return cells.length > 0 && cells.every(cell => cell.textContent.toLowerCase().includes(state.toLowerCase())); }",
             arg=state,
         )
         expect(page.locator("tbody tr").first.locator("td")).to_have_count(7)
         expect(dealer_link).to_be_visible()
         states = page.locator("tbody tr td:nth-child(6)").all_text_contents()
-        if not states or any(value.strip() != state for value in states):
+        if not states or any(state.lower() not in value.lower() for value in states):
             raise AssertionError("State filter displayed an incorrect dealership.")
         capture(page, "dealersbystate")
-        manifest["checks"].append(f"State filter displays only {state} dealerships.")
+        manifest["checks"].append(f"State search displays only dealerships matching {state}.")
 
-        with page.expect_response(lambda response: response.url.endswith("/djangoapp/get_dealers")):
-            page.get_by_label("Filter dealerships by state").select_option("All")
+        state_search.fill("")
+        state_search.blur()
         expect(page.locator("tbody tr")).to_have_count(all_dealers_count)
-        manifest["checks"].append(f"Restoring All States returns all {all_dealers_count} dealerships.")
+        manifest["checks"].append(f"Clearing the state search and leaving the field restores all {all_dealers_count} dealerships.")
 
         dealer_link.click()
         expect(page.get_by_role("heading", name="Customer reviews")).to_be_visible()

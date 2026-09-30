@@ -26,53 +26,68 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-test('switches states repeatedly and restores all dealerships', async () => {
-  global.fetch.mockImplementation(async url => response({
-    dealers: url === '/djangoapp/get_dealers' ? dealers : dealers.filter(dealer => url.endsWith(dealer.state)),
-  }));
+test('matches state substrings regardless of case and restores all dealerships without refetching', async () => {
+  global.fetch.mockResolvedValue(response({ dealers }));
   useSession.mockReturnValue({ user: { userName: 'reviewer' } });
   render(<Dealers />);
   expect(screen.getByRole('status')).toHaveTextContent('Loading dealerships');
   expect(await screen.findByRole('link', { name: 'Texas Cars' })).toBeInTheDocument();
-  const filter = screen.getByRole('combobox', { name: 'Filter dealerships by state' });
+  const filter = screen.getByRole('textbox', { name: 'Filter dealerships by state' });
+  expect(filter).toHaveAttribute('placeholder', 'Search states...');
 
-  fireEvent.change(filter, { target: { value: 'California' } });
-  expect(await screen.findByRole('link', { name: 'California Cars' })).toBeInTheDocument();
+  fireEvent.change(filter, { target: { value: 'fOrN' } });
+  expect(screen.getByRole('link', { name: 'California Cars' })).toBeInTheDocument();
   expect(screen.queryByRole('link', { name: 'Texas Cars' })).not.toBeInTheDocument();
 
-  fireEvent.change(filter, { target: { value: 'Texas' } });
-  expect(await screen.findByRole('link', { name: 'Texas Cars' })).toBeInTheDocument();
+  fireEvent.change(filter, { target: { value: 'xA' } });
+  fireEvent.blur(filter);
+  expect(filter).toHaveValue('xA');
+  expect(screen.getByRole('link', { name: 'Texas Cars' })).toBeInTheDocument();
   expect(screen.queryByRole('link', { name: 'California Cars' })).not.toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Review Texas Cars' })).toHaveAttribute('href', '/postreview/2');
 
-  fireEvent.change(filter, { target: { value: 'All' } });
-  expect(await screen.findByRole('link', { name: 'California Cars' })).toBeInTheDocument();
+  fireEvent.change(filter, { target: { value: 'a' } });
+  expect(screen.getByRole('link', { name: 'California Cars' })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Texas Cars' })).toBeInTheDocument();
-  expect(global.fetch.mock.calls.map(([url]) => url)).toEqual([
-    '/djangoapp/get_dealers', '/djangoapp/get_dealers/California', '/djangoapp/get_dealers/Texas', '/djangoapp/get_dealers',
-  ]);
+
+  fireEvent.change(filter, { target: { value: 'Texas' } });
+  fireEvent.change(filter, { target: { value: '' } });
+  expect(screen.getByRole('link', { name: 'California Cars' })).toBeInTheDocument();
+  fireEvent.blur(filter);
+  expect(screen.getByRole('link', { name: 'California Cars' })).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Texas Cars' })).toBeInTheDocument();
+  expect(global.fetch.mock.calls.map(([url]) => url)).toEqual(['/djangoapp/get_dealers']);
 });
 
-test('an obsolete state response cannot replace the latest selection', async () => {
-  let resolveCalifornia;
-  let californiaSignal;
-  global.fetch.mockImplementation((url, options) => {
-    if (url.endsWith('/California')) {
-      californiaSignal = options.signal;
-      return new Promise(resolve => { resolveCalifornia = resolve; });
-    }
-    return Promise.resolve(response({ dealers: url.endsWith('/Texas') ? [dealers[1]] : dealers }));
-  });
+test('shows an empty result for unmatched states and allows searching again', async () => {
+  global.fetch.mockResolvedValue(response({ dealers }));
   render(<Dealers />);
   await screen.findByRole('link', { name: 'Texas Cars' });
-  const filter = screen.getByRole('combobox');
-  fireEvent.change(filter, { target: { value: 'California' } });
-  fireEvent.change(filter, { target: { value: 'Texas' } });
-  await screen.findByRole('link', { name: 'Texas Cars' });
-  expect(californiaSignal.aborted).toBe(true);
-  await act(async () => { resolveCalifornia(response({ dealers: [dealers[0]] })); });
+  const filter = screen.getByRole('textbox', { name: 'Filter dealerships by state' });
+  fireEvent.change(filter, { target: { value: 'Atlantis' } });
+  fireEvent.blur(filter);
+  expect(screen.getByText('No dealerships found for this state.')).toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: 'California Cars' })).not.toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: 'Texas Cars' })).not.toBeInTheDocument();
+
+  fireEvent.change(filter, { target: { value: 'tex' } });
+  expect(screen.getByRole('link', { name: 'Texas Cars' })).toBeInTheDocument();
+  expect(screen.queryByText('No dealerships found for this state.')).not.toBeInTheDocument();
+  expect(global.fetch).toHaveBeenCalledTimes(1);
+});
+
+test('applies the latest search when dealerships finish loading', async () => {
+  let resolveDealers;
+  global.fetch.mockReturnValue(new Promise(resolve => { resolveDealers = resolve; }));
+  render(<Dealers />);
+  const filter = screen.getByRole('textbox', { name: 'Filter dealerships by state' });
+  fireEvent.change(filter, { target: { value: 'cal' } });
+  fireEvent.change(filter, { target: { value: 'tex' } });
+  expect(screen.getByRole('status')).toHaveTextContent('Loading dealerships');
+  await act(async () => { resolveDealers(response({ dealers })); });
   expect(screen.queryByRole('link', { name: 'California Cars' })).not.toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Texas Cars' })).toBeInTheDocument();
+  expect(global.fetch).toHaveBeenCalledTimes(1);
 });
 
 test('shows an HTTP failure and retries without requiring a page refresh', async () => {
@@ -81,8 +96,10 @@ test('shows an HTTP failure and retries without requiring a page refresh', async
   render(<Dealers />);
   expect(await screen.findByRole('alert')).toHaveTextContent('Unable to load dealerships');
   expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  fireEvent.change(screen.getByRole('textbox'), { target: { value: 'tex' } });
   fireEvent.click(screen.getByRole('button', { name: 'Try again' }));
-  expect(await screen.findByRole('link', { name: 'California Cars' })).toBeInTheDocument();
+  expect(await screen.findByRole('link', { name: 'Texas Cars' })).toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: 'California Cars' })).not.toBeInTheDocument();
   expect(screen.queryByRole('alert')).not.toBeInTheDocument();
   expect(screen.queryByRole('columnheader', { name: 'Review Dealer' })).not.toBeInTheDocument();
 });
@@ -98,6 +115,7 @@ test('shows dealer reviews, sentiment, purchase details, and the signed-in revie
   expect(screen.getByRole('img', { name: 'positive sentiment' })).toBeInTheDocument();
   expect(screen.getByText('2024 Land Rover Range Rover')).toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Post Review' })).toHaveAttribute('href', '/postreview/1');
+  expect(screen.getByRole('link', { name: 'Search Cars' })).toHaveAttribute('href', '/searchcars/1');
 });
 
 test('distinguishes a review service failure from a dealership with no reviews', async () => {
@@ -110,6 +128,7 @@ test('distinguishes a review service failure from a dealership with no reviews',
   expect(screen.queryByText(/No reviews yet/)).not.toBeInTheDocument();
   expect(screen.queryByRole('status')).not.toBeInTheDocument();
   expect(screen.queryByRole('link', { name: 'Post Review' })).not.toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Search Cars' })).toHaveAttribute('href', '/searchcars/1');
   reviewsFail = false;
   fireEvent.click(screen.getByRole('button', { name: 'Try again' }));
   await waitFor(() => expect(screen.getByText(/No reviews yet/)).toBeInTheDocument());

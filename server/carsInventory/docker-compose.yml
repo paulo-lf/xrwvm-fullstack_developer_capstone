@@ -1,0 +1,54 @@
+name: car-inventory
+
+services:
+  mongo_db:
+    image: mongo:8.0
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:27018:27017"
+    volumes:
+      - inventory_data:/data/db
+    networks:
+      - inventory
+    healthcheck:
+      test:
+        - CMD
+        - mongosh
+        - --quiet
+        - --eval
+        - "quit(db.adminCommand({ ping: 1 }).ok ? 0 : 1)"
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+  api:
+    build: .
+    image: dealership-cars-inventory:local
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3050:3050"
+    environment:
+      PORT: "3050"
+      MONGODB_URI: "mongodb://mongo_db:27017/carsInventory"
+    networks:
+      - inventory
+    depends_on:
+      mongo_db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3050/').then(response => process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+
+volumes:
+  inventory_data:
+
+networks:
+  inventory:

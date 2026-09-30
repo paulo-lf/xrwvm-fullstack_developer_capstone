@@ -1,0 +1,41 @@
+{
+  "captured_at_utc": "2026-09-30T09:14:02.288179+00:00",
+  "base_url": "http://127.0.0.1:8000",
+  "mode": "local Chromium, page-content screenshots",
+  "address_bar_visible": false,
+  "checks": [
+    "Home uses the green navigation bar and plum View Dealerships button.",
+    "Mixed-case partial state search finds 8 Texas dealers; blur keeps nonempty results.",
+    "Switching queries, no results, and clear/blur restore all 50 dealers without extra dealer requests.",
+    "At 390px width, state search remains usable and the table scrolls within the page.",
+    "Signed-in review links work with search; icons have a stable 2px black border on hover and keyboard focus.",
+    "Live reviews and sentiment load with purple cards and centred 18px reviewer details.",
+    "Dealer detail refresh and the authenticated review form work; no review was submitted.",
+    "Login/logout succeed; no uncaught browser errors.",
+    "Temporary verification account and its session were removed."
+  ],
+  "screenshots": [
+    {
+      "file": "home.png",
+      "url": "http://127.0.0.1:8000/"
+    },
+    {
+      "file": "state_search_texas.png",
+      "url": "http://127.0.0.1:8000/dealers/"
+    },
+    {
+      "file": "state_search_mobile.png",
+      "url": "http://127.0.0.1:8000/dealers/"
+    },
+    {
+      "file": "review_icon_hover.png",
+      "url": "http://127.0.0.1:8000/dealers/"
+    },
+    {
+      "file": "dealer_reviews.png",
+      "url": "http://127.0.0.1:8000/dealer/29"
+    }
+  ],
+  "page_errors": [],
+  "completed": true
+}

@@ -22,8 +22,8 @@ const Header = () => {
 
   return (
     <>
-      <nav className="navbar navbar-light" aria-label="Main navigation"
-        style={{ backgroundColor: "darkturquoise", minHeight: "96px", padding: "16px 24px" }}>
+      <nav className="navbar navbar-light app-navbar" aria-label="Main navigation"
+        style={{ minHeight: "96px", padding: "16px 24px" }}>
         <div className="container-fluid" style={{ gap: "20px" }}>
           <a className="navbar-brand" href="/dealers/" style={{ fontSize: "1.75rem" }}>Dealerships</a>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "24px", flex: 1 }}>

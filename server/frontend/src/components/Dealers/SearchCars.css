@@ -1,0 +1,173 @@
+.inventory-page {
+  max-width: 1280px;
+  margin: 28px auto;
+  padding: 0 24px;
+  color: #30383b;
+}
+
+.inventory-heading {
+  margin-bottom: 24px;
+}
+
+.inventory-back-link {
+  display: inline-block;
+  margin-bottom: 18px;
+}
+
+.inventory-page h1 {
+  color: #3e555a;
+  font-size: 2rem;
+  overflow-wrap: anywhere;
+}
+
+.inventory-filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+  gap: 16px;
+  min-width: 0;
+  padding: 20px;
+  margin: 0 0 24px;
+  background-color: #e3faef;
+  border: 1px solid #b8decc;
+  border-radius: 12px;
+}
+
+.inventory-filters legend {
+  float: none;
+  width: auto;
+  padding: 0 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.inventory-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  font-weight: 600;
+}
+
+.inventory-filter select {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 28px 10px 10px;
+  border: 1px solid #8ea99b;
+  border-radius: 6px;
+  background-color: white;
+  color: #30383b;
+  font: inherit;
+  font-weight: 400;
+}
+
+.inventory-reset,
+.inventory-retry {
+  padding: 10px 16px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background-color: plum;
+  color: #302034;
+  font-weight: 600;
+}
+
+.inventory-reset:hover,
+.inventory-retry:hover {
+  background-color: #cf8fcf;
+  border-color: purple;
+}
+
+.inventory-page select:focus-visible,
+.inventory-page button:focus-visible,
+.inventory-page a:focus-visible {
+  outline: 2px solid purple;
+  outline-offset: 3px;
+}
+
+.inventory-page :disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.inventory-feedback,
+.inventory-empty {
+  padding: 18px 20px;
+  border-radius: 8px;
+  background-color: #f5f7f6;
+}
+
+.inventory-error {
+  color: #721c24;
+  background-color: #fff0f2;
+  border: 1px solid #e8b8c0;
+}
+
+.inventory-retry {
+  margin: 8px 0 0;
+}
+
+.inventory-count {
+  color: #435b60;
+  margin: 0 0 16px;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 20px;
+}
+
+.inventory-card {
+  padding: 22px;
+  border: 1px solid #cbaad3;
+  border-radius: 10px;
+  background-color: #fffaff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow-wrap: anywhere;
+}
+
+.inventory-card h2 {
+  margin: 0 0 20px;
+  color: #52365e;
+  font-size: 1.3rem;
+}
+
+.inventory-card-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+  margin: 0;
+}
+
+.inventory-card-details dt {
+  color: #5b6568;
+  font-weight: 400;
+}
+
+.inventory-card-details dd {
+  margin: 0;
+  text-align: right;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .inventory-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .inventory-page {
+    margin: 24px auto;
+    padding: 0 16px;
+  }
+
+  .inventory-page h1 {
+    font-size: 1.65rem;
+  }
+
+  .inventory-filters {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 16px;
+  }
+}
